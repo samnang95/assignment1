@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+  echo "Usage: githubpull [https://github.com/samnang95/assignment1.git]"
+  exit 1
+fi
+
+URL="$1"
+USERNAME=$(echo "$URL" | cut -d'/' -f4)
+API_URL="https://api.github.com/users/$USERNAME/repos"
+OUTPUT_FILE="RinSamnang.txt"
+
+curl -s "$API_URL" | jq -r '.[].name' > "$OUTPUT_FILE"
+
+echo "Repository list saved to $OUTPUT_FILE"
+
